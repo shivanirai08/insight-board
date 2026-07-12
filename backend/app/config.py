@@ -6,9 +6,14 @@ required is missing or the wrong type — better than scattered os.getenv calls.
 """
 
 from functools import lru_cache
+from pathlib import Path
 
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+# backend/app/config.py → repo root is parents[2]
+_REPO_ROOT = Path(__file__).resolve().parents[2]
+_DEFAULT_SAMPLE = str(_REPO_ROOT / "sample_data" / "sales_sample.csv")
 
 
 class Settings(BaseSettings):
@@ -44,6 +49,8 @@ class Settings(BaseSettings):
     # Local shortcut for building UIs before Google OAuth credentials exist.
     # MUST stay false in production.
     ENABLE_DEV_LOGIN: bool = True
+
+    SAMPLE_DATA_PATH: str = _DEFAULT_SAMPLE
 
 
 @lru_cache

@@ -55,6 +55,13 @@ curl -s -X POST http://localhost:8000/api/auth/dev-login \
   -d '{"email":"you@example.com","full_name":"You"}'
 ```
 
+Load sample data (use the `access_token` from dev-login):
+
+```bash
+curl -s -X POST http://localhost:8000/api/datasets/sample \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
 ### 3. Frontend (later checkpoint)
 
 ```bash
