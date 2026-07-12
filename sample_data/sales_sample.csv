@@ -1,0 +1,26 @@
+date,region,product,category,units_sold,unit_price,revenue,sales_rep
+2024-01-05,North,Widget A,Hardware,12,29.99,359.88,Alex
+2024-01-08,South,Gadget B,Electronics,5,149.00,745.00,Jordan
+2024-01-12,East,Widget A,Hardware,8,29.99,239.92,Sam
+2024-01-15,West,Service Plan,Services,20,9.99,199.80,Alex
+2024-01-20,North,Gadget B,Electronics,3,149.00,447.00,Taylor
+2024-02-02,South,Widget C,Hardware,15,39.99,599.85,Jordan
+2024-02-07,East,Service Plan,Services,10,9.99,99.90,Sam
+2024-02-14,West,Gadget B,Electronics,7,149.00,1043.00,Alex
+2024-02-21,North,Widget A,Hardware,22,29.99,659.78,Taylor
+2024-03-01,South,Widget C,Hardware,9,39.99,359.91,Jordan
+2024-03-08,East,Gadget B,Electronics,4,149.00,596.00,Sam
+2024-03-15,West,Service Plan,Services,30,9.99,299.70,Alex
+2024-03-22,North,Widget A,Hardware,18,29.99,539.82,Taylor
+2024-04-04,South,Widget C,Hardware,11,39.99,439.89,Jordan
+2024-04-11,East,Gadget B,Electronics,6,149.00,894.00,Sam
+2024-04-18,West,Widget A,Hardware,14,29.99,419.86,Alex
+2024-04-25,North,Service Plan,Services,25,9.99,249.75,Taylor
+2024-05-03,South,Gadget B,Electronics,8,149.00,1192.00,Jordan
+2024-05-10,East,Widget C,Hardware,16,39.99,639.84,Sam
+2024-05-17,West,Widget A,Hardware,10,29.99,299.90,Alex
+2024-05-24,North,Service Plan,Services,40,9.99,399.60,Taylor
+2024-06-02,South,Gadget B,Electronics,2,149.00,298.00,Jordan
+2024-06-09,East,Widget A,Hardware,27,29.99,809.73,Sam
+2024-06-16,West,Widget C,Hardware,13,39.99,519.87,Alex
+2024-06-23,North,Service Plan,Services,18,9.99,179.82,Taylor
