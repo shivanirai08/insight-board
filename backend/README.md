@@ -7,7 +7,7 @@ FastAPI application: OAuth, CSV ingestion, analytics endpoints, and Dash at `/an
 Start PostgreSQL from the repo root:
 
 ```bash
-podman compose up -d   # or: docker compose up -d
+./scripts/start-db.sh
 ```
 
 ## Run
@@ -27,4 +27,8 @@ uvicorn app.main:app --reload --port 8000
 ```
 
 - Interactive API docs: http://localhost:8000/docs  
-- DB check: http://localhost:8000/api/db/health
+- DB check: http://localhost:8000/api/db/health  
+- Dev login: `POST /api/auth/dev-login`  
+- Google login: http://localhost:8000/api/auth/google/login (needs `.env` credentials)
+
+Learning notes (local): `doc/04-oauth-jwt.md`

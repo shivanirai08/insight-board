@@ -47,6 +47,14 @@ uvicorn app.main:app --reload --port 8000
 - App health: http://localhost:8000/health  
 - DB health: http://localhost:8000/api/db/health  
 
+Dev login (until Google OAuth is configured):
+
+```bash
+curl -s -X POST http://localhost:8000/api/auth/dev-login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"you@example.com","full_name":"You"}'
+```
+
 ### 3. Frontend (later checkpoint)
 
 ```bash

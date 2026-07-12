@@ -41,6 +41,10 @@ class Settings(BaseSettings):
     GOOGLE_REDIRECT_URI: str = "http://localhost:8000/api/auth/google/callback"
     FRONTEND_URL: str = "http://localhost:5173"
 
+    # Local shortcut for building UIs before Google OAuth credentials exist.
+    # MUST stay false in production.
+    ENABLE_DEV_LOGIN: bool = True
+
 
 @lru_cache
 def get_settings() -> Settings:

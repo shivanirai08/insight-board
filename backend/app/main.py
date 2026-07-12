@@ -10,6 +10,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.sessions import SessionMiddleware
 
 from app.api.routes import api_router
 from app.config import settings
@@ -49,6 +50,9 @@ def create_app() -> FastAPI:
         redoc_url="/redoc",
         lifespan=lifespan,
     )
+
+    # Session cookie required by Authlib to store OAuth "state" (CSRF protection).
+    application.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY)
 
     # CORS: browsers block cross-origin API calls unless we allow the React origin.
     application.add_middleware(
