@@ -6,11 +6,31 @@ Mental model:
   Every HTTP request becomes: path → router → path operation function → response.
 """
 
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.routes import api_router
 from app.config import settings
+from app.db.base import Base
+from app.db.session import engine
+
+# Import models so Base.metadata knows about every table before create_all().
+import app.models  # noqa: F401
+
+
+@asynccontextmanager
+async def lifespan(_application: FastAPI):
+    """
+    Startup / shutdown hook.
+
+    On startup we create tables if they do not exist (fine for learning).
+    Later you can replace this with Alembic migrations for production.
+    """
+    Base.metadata.create_all(bind=engine)
+    yield
+    # Shutdown hooks (close pools, etc.) would go here.
 
 
 def create_app() -> FastAPI:
@@ -27,6 +47,7 @@ def create_app() -> FastAPI:
         description="Analytics API for InsightBoard — CSV in, KPIs and charts out.",
         docs_url="/docs",
         redoc_url="/redoc",
+        lifespan=lifespan,
     )
 
     # CORS: browsers block cross-origin API calls unless we allow the React origin.

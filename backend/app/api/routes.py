@@ -7,8 +7,9 @@ We include them here so `main.py` only needs one `include_router` call.
 
 from fastapi import APIRouter
 
-from app.api import hello
+from app.api import hello, system
 from app.config import settings
 
 api_router = APIRouter(prefix=settings.API_PREFIX)
 api_router.include_router(hello.router, tags=["hello"])
+api_router.include_router(system.router)

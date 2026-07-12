@@ -23,21 +23,31 @@ Both frontends consume the **same** API — API-first design.
 
 ## Quick start (local)
 
-### Backend
+### 1. PostgreSQL (Docker or Podman)
 
 ```bash
+chmod +x scripts/start-db.sh
+./scripts/start-db.sh
+```
+
+Or with Compose (if the plugin is installed): `docker compose up -d` / `podman compose up -d`.
+
+### 2. Backend
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -r backend/requirements.txt
+cp backend/.env.example backend/.env
 cd backend
-python3 -m venv ../.venv
-source ../.venv/bin/activate   # Windows: ..\.venv\Scripts\activate
-pip install -r requirements.txt
-cp .env.example .env           # edit secrets as needed
 uvicorn app.main:app --reload --port 8000
 ```
 
 - API docs: http://localhost:8000/docs  
-- Health: http://localhost:8000/health  
+- App health: http://localhost:8000/health  
+- DB health: http://localhost:8000/api/db/health  
 
-### Frontend
+### 3. Frontend (later checkpoint)
 
 ```bash
 cd frontend
