@@ -5,61 +5,81 @@ Full-stack analytics dashboard: upload a CSV (or load a sample sales dataset), c
 ## Architecture
 
 ```
-PostgreSQL  →  FastAPI (auth, upload, /api/summary|trends|breakdown)
+PostgreSQL  →  FastAPI (auth, upload, analytics)
                     │                    │
-              React (customer)      Dash (analyst @ /analytics)
+              React (Vercel)        Dash (@ /analytics on Azure)
 ```
 
-Both frontends consume the **same** API — API-first design.
+Both frontends share the **same** API — API-first design.
 
 ## Repo layout
 
 | Path | Role |
 |------|------|
-| `backend/` | FastAPI + pandas + SQLAlchemy + Dash mount |
+| `backend/` | FastAPI + pandas + SQLAlchemy + Dash |
 | `frontend/` | React (Vite) customer dashboard |
-| `sample_data/` | Example sales CSV for demos |
-| `doc/` | Local learning notes (gitignored — not in git) |
+| `sample_data/` | Demo sales CSV |
+| `scripts/` | `start-db.sh`, `smoke-test.sh` |
+| `DEPLOYMENT.md` | Azure + Vercel (and AWS notes) |
+| `doc/` | Local learning notes (gitignored) |
+
+## API surface
+
+| Method | Path | Purpose |
+|--------|------|---------|
+| GET | `/health` | Liveness |
+| GET | `/api/db/health` | Postgres check |
+| GET | `/api/auth/google/login` | Start Google OAuth |
+| POST | `/api/auth/dev-login` | Local JWT (disable in prod) |
+| GET | `/api/auth/me` | Current user |
+| POST | `/api/datasets/upload` | CSV upload |
+| POST | `/api/datasets/sample` | Load sample sales |
+| GET | `/api/data/{id}/summary` | KPIs |
+| GET | `/api/data/{id}/trends` | Time series |
+| GET | `/api/data/{id}/breakdown` | Category/region bars |
+| UI | `/analytics/` | Dash analyst workspace |
+
+Interactive docs: http://localhost:8000/docs
 
 ## Quick start (local)
 
-### 1. PostgreSQL (Docker or Podman)
+### 1. PostgreSQL
 
 ```bash
-chmod +x scripts/start-db.sh
+chmod +x scripts/start-db.sh scripts/smoke-test.sh
 ./scripts/start-db.sh
 ```
-
-Or with Compose (if the plugin is installed): `docker compose up -d` / `podman compose up -d`.
 
 ### 2. Backend
 
 ```bash
 python3 -m venv .venv
-source .venv/bin/activate   # Windows: .venv\Scripts\activate
+source .venv/bin/activate
 pip install -r backend/requirements.txt
 cp backend/.env.example backend/.env
 cd backend
 uvicorn app.main:app --reload --port 8000
 ```
 
-- API docs: http://localhost:8000/docs  
-- App health: http://localhost:8000/health  
-- DB health: http://localhost:8000/api/db/health  
+Optional smoke test (another terminal): `./scripts/smoke-test.sh`
 
-Dev login (until Google OAuth is configured):
+### 3. React
 
 ```bash
-curl -s -X POST http://localhost:8000/api/auth/dev-login \
-  -H "Content-Type: application/json" \
-  -d '{"email":"you@example.com","full_name":"You"}'
+cd frontend
+cp .env.example .env
+npm install
+npm run dev
 ```
 
-Load sample data (use the `access_token` from dev-login):
+Open http://localhost:5173 → **Dev login** → **Load sample sales**.
+
+Dash analyst UI: http://localhost:8000/analytics/ (paste the same JWT).
+
+### Compose (API + DB)
 
 ```bash
-curl -s -X POST http://localhost:8000/api/datasets/sample \
-  -H "Authorization: Bearer YOUR_TOKEN"
+docker compose up --build
 ```
 
 ### 3. Frontend

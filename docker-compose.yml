@@ -16,5 +16,25 @@ services:
       timeout: 5s
       retries: 10
 
+  api:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: insightboard-api
+    ports:
+      - "8000:8000"
+    environment:
+      APP_ENV: development
+      DEBUG: "false"
+      ENABLE_DEV_LOGIN: "true"
+      SECRET_KEY: compose-dev-secret-change-me
+      DATABASE_URL: postgresql+psycopg://insight:insight@db:5432/insightboard
+      BACKEND_CORS_ORIGINS: '["http://localhost:5173","http://127.0.0.1:5173"]'
+      FRONTEND_URL: http://localhost:5173
+      SAMPLE_DATA_PATH: /app/sample_data/sales_sample.csv
+    depends_on:
+      db:
+        condition: service_healthy
+
 volumes:
   insightboard_pgdata:

@@ -137,6 +137,9 @@ export function DashboardPage() {
           <p className="subtle">Customer analytics</p>
         </div>
         <div className="dash-user">
+          <a className="btn btn-ghost" href={import.meta.env.VITE_ANALYTICS_URL || 'http://localhost:8000/analytics/'} target="_blank" rel="noreferrer">
+            Analyst view
+          </a>
           <span>{user?.full_name || user?.email}</span>
           <button type="button" className="btn btn-ghost" onClick={logout}>
             Log out
