@@ -1,4 +1,4 @@
-# Checkpoint 4–5 — upload, pandas, analytics APIs
+# Checkpoint 7 — Dash analyst UI + prior backend stack
 
 fastapi>=0.115.0
 uvicorn[standard]>=0.32.0
@@ -19,3 +19,7 @@ itsdangerous>=2.2.0
 
 # Data
 pandas>=2.2.0
+
+# Dash analyst UI
+dash>=2.18.0
+plotly>=5.24.0

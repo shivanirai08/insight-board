@@ -30,5 +30,6 @@ uvicorn app.main:app --reload --port 8000
 - DB check: http://localhost:8000/api/db/health  
 - Dev login: `POST /api/auth/dev-login`  
 - Google login: http://localhost:8000/api/auth/google/login (needs `.env` credentials)
+- Analyst Dash UI: http://localhost:8000/analytics/
 
-Learning notes (local): `doc/04-oauth-jwt.md`
+Learning notes (local): `doc/04-oauth-jwt.md`, `doc/07-dash-analyst.md`

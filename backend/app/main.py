@@ -10,10 +10,13 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import RedirectResponse
 from starlette.middleware.sessions import SessionMiddleware
+from starlette.middleware.wsgi import WSGIMiddleware
 
 from app.api.routes import api_router
 from app.config import settings
+from app.dash_app import create_dash_app
 from app.db.base import Base
 from app.db.session import engine
 
@@ -70,6 +73,15 @@ def create_app() -> FastAPI:
     def health() -> dict[str, str]:
         """Liveness probe — used by you locally and by cloud load balancers later."""
         return {"status": "ok", "app": settings.APP_NAME, "env": settings.APP_ENV}
+
+    @application.get("/analytics", include_in_schema=False)
+    def analytics_redirect() -> RedirectResponse:
+        """Dash expects a trailing slash when mounted under a subpath."""
+        return RedirectResponse(url="/analytics/")
+
+    # Dash (Flask/WSGI) lives beside the REST API — same process, denser analyst UI.
+    dash_app = create_dash_app()
+    application.mount("/analytics/", WSGIMiddleware(dash_app.server))
 
     return application
 

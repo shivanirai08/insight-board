@@ -73,6 +73,8 @@ npm run dev
 
 Open http://localhost:5173 — use **Dev login**, then **Load sample sales**.
 
+Analyst (Dash) view on the same backend: http://localhost:8000/analytics/
+
 ## License
 
 MIT
