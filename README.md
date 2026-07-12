@@ -62,15 +62,16 @@ curl -s -X POST http://localhost:8000/api/datasets/sample \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
-### 3. Frontend (later checkpoint)
+### 3. Frontend
 
 ```bash
 cd frontend
+cp .env.example .env
 npm install
 npm run dev
 ```
 
-Open the URL Vite prints (usually http://localhost:5173).
+Open http://localhost:5173 — use **Dev login**, then **Load sample sales**.
 
 ## License
 
